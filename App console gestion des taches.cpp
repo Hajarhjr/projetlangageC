@@ -51,6 +51,13 @@ tach tab[100],t;
  }
 
  // method afficher*******************************************************************
+ void afficher(tach tab[],int i)
+{      
+	for(int j=0;j<i;j++)
+	{
+   	printf(" les informations dans la tache %d sont: \n le ID : %d \n la description : %s \n priorite : %s \n datedechance :%d/%d/%d \n",j+1,tab[j].id,tab[j].description,tab[j].priorite,tab[j].datedech.day,tab[j].datedech.month,tab[j].datedech.year);
+	}	
+}
 
 //method modiffier
 
@@ -77,7 +84,7 @@ int main()
     		     	ajouter();
     			break;
     		case 2:
-    				
+    					afficher(tab,i);
     			break;
     		case 3:
     			
