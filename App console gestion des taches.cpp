@@ -16,11 +16,11 @@ typedef struct{
 tach tab[100],t;
 // method exist*************************************************************
   int exist(int id){
-    
+     
   	for(int j=0;j<i;j++)
   	{
   		if(tab[j].id==id)
-  		{
+  		{ 
   			return 1;
   		 }
   		    return 0;
@@ -45,6 +45,7 @@ tach tab[100],t;
  	  fgets(t.priorite,sizeof(t.priorite),stdin);
 	 scanf("%d%d%d",&t.datedech.day,&t.datedech.month,&t.datedech.year);
 	 tab[i]=t;
+	 
 	 i++;
 	 printf("ajout bien fait \n");
 	 }
@@ -59,13 +60,43 @@ tach tab[100],t;
 	}	
 }
 
-//method modiffier
+//method modiffier*******************************
 
-//methode supprimer
+
+//methode supprimer*******************************
+int supprimer()
+{	
+	int id;
+	printf("donner l'ID de la tache \n");
+	scanf("%d",&id);
+	
+    	if(exist(id)==0){
+	     	printf("aucune tache avec ce ID \n");
+	     	
+    	}else{
+			
+		for(int j=0;j<i;j++){
+		
+			if(tab[j].id==id)
+			{
+				for(int k=j;k<i-1;k++)
+				{
+					tab[k]=tab[k+1];
+				}
+				i--;
+				printf("la tache est supprimer ");
+			}
+		}
+	}
+		
+	
+}
 
 
 int main()
-{   int choix;
+
+{
+   int choix;
     while(choix!=7){
     	
     	printf("choisissez vous votre chois \n");
@@ -87,9 +118,10 @@ int main()
     					afficher(tab,i);
     			break;
     		case 3:
-    			
+    		//	modifier();
 		     	break;
 			case 4:
+				supprimer();
 		     	break;	
 		     case 5:
 			    break;
