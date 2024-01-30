@@ -10,7 +10,7 @@ typedef struct{
 typedef struct{
 	int id;
 	char description [200];
-	char priorite [200];
+	char priorite [20];
 	date datedech;
 }tach;
 tach tab[100],t;
@@ -38,10 +38,13 @@ tach tab[100],t;
  		
 	 } else{
 	 
-	 printf("donner les information a ajouter :  description  priorite datedecheance \n");
+	 printf("donner les information a ajouter : \n"); 
 	 	// utiliser scanf avec le format %[^\n] pour lire toute la ligne (y compris les espaces)
+	 	printf("donner la description \n");
  	  scanf(" %[^\n]", t.description);
+ 	  printf("donner la priorite  (important, sans importance ou secondaire ) \n");
         scanf(" %[^\n]", t.priorite);
+         printf("donner la datedecheance \n");
 	 scanf("%d%d%d",&t.datedech.day,&t.datedech.month,&t.datedech.year);
 	 tab[i]=t;
 	 
@@ -197,13 +200,32 @@ void filtrerpardate(tach tab[])
         if (tab[j].datedech.day == newday && tab[j].datedech.month == newmonth && tab[j].datedech.year == newyear) {
             printf("les nformations sont dans la tache %d :\n", j + 1);
             printf("ID : %d\n", tab[j].id);
-            printf("Description : %s\n", tab[j].description);
-            printf("Priorite : %s\n", tab[j].priorite);
-            printf("Datedechance : %d/%d/%d\n", tab[j].datedech.day, tab[j].datedech.month, tab[j].datedech.year);
+            printf("description : %s\n", tab[j].description);
+            printf("priorite : %s\n", tab[j].priorite);
+            printf("datedechance : %d/%d/%d\n", tab[j].datedech.day, tab[j].datedech.month, tab[j].datedech.year);
 			
 		}
 	
 }
+}
+//****************************************************************************
+void filtrerparpro(tach tab[])
+{  
+      char npriorite [20];
+      printf("donner la prioriter \n");
+      scanf(" %[^\n]",npriorite);
+      for(int j=0;j<i;j++){
+      	//strcmp renvoie 0 si les chaînes sont egales
+      	if(strcmp(tab[j].priorite, npriorite) == 0){
+      		 printf("ID : %d\n", tab[j].id);
+            printf("description : %s\n", tab[j].description);
+            printf("priorite : %s\n", tab[j].priorite);
+            printf("datedechance : %d/%d/%d\n", tab[j].datedech.day, tab[j].datedech.month, tab[j].datedech.year);
+			
+		  }
+	  }
+   
+	
 }
 // methode pour sauvegarder dans un fichier******************************************************
 void saveinfile() {
@@ -230,7 +252,7 @@ void apploadfromfile() {
         return;
     }
 
-    while (fscanf(fichier, "%d %99[^\n] %99[^\n] %d %d %d",
+    while (fscanf(fichier, "%d %99[^\n] %19[^\n] %d %d %d",
                   &t.id, t.description, t.priorite, &t.datedech.day, &t.datedech.month, &t.datedech.year) == 6) {
         tab[i] = t;
         i++;
@@ -242,10 +264,7 @@ void apploadfromfile() {
 
 
 
-void filtrerparpro()
-{ 
-	
-}
+
 
 int main()
 
@@ -261,7 +280,8 @@ int main()
     	printf("tapper 4 pour Supprimer  une Tache  \n");
     	printf("tapper 5 pour Ordonner les Taches \n");
     	printf("tapper 6 pour Filtrer les Taches par date \n ");
-    	printf("tapper 7 pour quiter \n");
+    	printf("tapper 7 pour Filtrer les Taches par priorite \n ");
+    	printf("tapper 8 pour quiter \n");
     	scanf("%d",&choix);
     	
     	switch(choix){
@@ -285,8 +305,11 @@ int main()
 				filtrerpardate(tab);
 			    break;
 			case 7:
-				saveinfile(); 
-			      printf("au revoire ");
+				filtrerparpro(tab);
+			    break;
+			case 8:
+			   	saveinfile(); 
+			    printf("au revoire ");
 			    break;
 			
 		default:
