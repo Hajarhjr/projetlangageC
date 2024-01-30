@@ -31,7 +31,7 @@ tach tab[100],t;
  		
  		printf("donner le nombre de tache \n");
       	scanf("%d",&t.id);
-      	
+   	// lutilisation de la method exist qui teste si le id est exist ou non Cela m'aide à rendre le code plus précis  
  	if(exist(t.id)==1)
  	{
  	    printf("le id de cette tache est deja exist \n");
@@ -39,6 +39,7 @@ tach tab[100],t;
 	 } else{
 	 
 	 printf("donner les information a ajouter :  description  priorite datedecheance \n");
+	 	// utiliser scanf avec le format %[^\n] pour lire toute la ligne (y compris les espaces)
  	  scanf(" %[^\n]", t.description);
         scanf(" %[^\n]", t.priorite);
 	 scanf("%d%d%d",&t.datedech.day,&t.datedech.month,&t.datedech.year);
@@ -64,7 +65,7 @@ void modifier()
 {  int choix;
     printf("donner le id de la tache a modifier \n");
     scanf("%d", &t.id);
-
+// si le ID est exsist on doit commencer la modification
     if (exist(t.id) == 1) {
         for (int j = 0; j < i; j++) {
             while (choix != 5) {
@@ -181,7 +182,7 @@ void ordoner(){
         printf("bien ordoner \n");
           
 }
-// methode filtrer 
+// methode filtrer par date ******************************************
 void filtrerpardate(tach tab[])
 {
     int newyear,newmonth,newday;
@@ -204,14 +205,52 @@ void filtrerpardate(tach tab[])
 	
 }
 }
+// methode pour sauvegarder dans un fichier******************************************************
+void saveinfile() {
+    FILE *fichier = fopen("tabtaches.txt", "w+");
+
+    if (fichier == NULL) {
+        printf("erreur lors de l'ouverture du fichier.\n");
+        return;
+    }
+
+    for (int j = 0; j < i; j++) {
+        fprintf(fichier, "%d\n%s\n%s\n%d %d %d\n", tab[j].id, tab[j].description, tab[j].priorite, tab[j].datedech.day, tab[j].datedech.month, tab[j].datedech.year);
+    }
+
+    fclose(fichier);
+    printf("Les donnees ont ete sauvegardees dans le fichier tabtaches.txt.\n");
+}
+// methode pour charger depuis un fichier***************************************************************
+void apploadfromfile() {
+    FILE *fichier = fopen("tabtaches.txt", "r");
+
+    if (fichier == NULL) {
+        printf("Erreur lors de l'ouverture du fichier.\n");
+        return;
+    }
+
+    while (fscanf(fichier, "%d %99[^\n] %99[^\n] %d %d %d",
+                  &t.id, t.description, t.priorite, &t.datedech.day, &t.datedech.month, &t.datedech.year) == 6) {
+        tab[i] = t;
+        i++;
+    }
+
+    fclose(fichier);
+    printf("Les donnees ont ete chargees depuis le fichier tabtaches.txt.\n");
+}
+
+
+
 void filtrerparpro()
-{
+{ 
 	
 }
 
 int main()
 
 {
+	apploadfromfile();
    int choix;
     while(choix!=7){
     	
@@ -221,7 +260,7 @@ int main()
     	printf("tapper 3 pour Modifier une Tache  \n");
     	printf("tapper 4 pour Supprimer  une Tache  \n");
     	printf("tapper 5 pour Ordonner les Taches \n");
-    	printf("tapper 6 pour Filtrer les Taches \n ");
+    	printf("tapper 6 pour Filtrer les Taches par date \n ");
     	printf("tapper 7 pour quiter \n");
     	scanf("%d",&choix);
     	
@@ -231,7 +270,7 @@ int main()
     		     	ajouter();
     			break;
     		case 2:
-    					afficher();
+    				afficher();
     			break;
     		case 3:
     			modifier();
@@ -246,6 +285,7 @@ int main()
 				filtrerpardate(tab);
 			    break;
 			case 7:
+				saveinfile(); 
 			      printf("au revoire ");
 			    break;
 			
