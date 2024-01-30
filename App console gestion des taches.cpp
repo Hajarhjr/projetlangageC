@@ -52,7 +52,7 @@ tach tab[100],t;
  }
 
  // method afficher*******************************************************************
- void afficher(tach tab[],int i)
+ void afficher()
 {      
 	for(int j=0;j<i;j++)
 	{
@@ -61,7 +61,64 @@ tach tab[100],t;
 }
 
 //method modiffier*******************************
+void modifier()
+{   getchar();
+     int choix;
+	printf("donner le id de la tache a modifier \n");
+	scanf("%d",&t.id);
+	if(exist(t.id)==1)
+	{ 
+for  (int j=0;j<i;i++){	 
+	   while(choix!=5){
+		printf("pour modifier le id  taper 1 \n");
+		printf("pour modifier la description taper 2 \n");
+		printf("pour modifier la propriete taper 3\n");
+		printf("pour modifier la date taper 4 \n");
+		printf("pour  quiter taper 5 \n");
+		scanf("%d",&choix);
+	        
+		switch(choix)
+		{ 
+		case 1:
+			  printf("donner la nouvelle id \n");
+			  scanf("%d",&tab[j].id);
+			  
+			  break;
+             	printf("modifier avec sucsee \n");
+		case 2:
+			printf("donner la nouvelle description \n");
+			 fgets(tab[j].description,sizeof(tab[j].description),stdin);
+			 
+			 break;
+			 printf("modifier avec sucsee \n");
+		case 3:
+			printf("donner la nouvelle prioriter \n");
+			fgets(tab[j].priorite,sizeof(tab[j].priorite),stdin);
+			
+			break;
+		printf("modifier avec sucsee \n");
+		case 4:
+			printf("donner la date \n");
+		scanf("%d%d%d",&tab[j].datedech.day,&tab[j].datedech.month,&tab[j].datedech.year);
+	
+		break;
+			printf("modifier avec sucsee \n");
+	    case 5:
+	    	printf("aurevoir \n");
+	    	break;
+	    	default:
+	    		printf("ereure \n ");
+	    		break;
+	    }
+		getchar();			
+	
 
+	}
+ }
+		}
+
+
+}
 
 //methode supprimer*******************************
 int supprimer()
@@ -141,6 +198,32 @@ void ordoner(){
  
           
 }
+// methode filtrer 
+void filtrerpardate(tach tab[])
+{
+    int newyear,newmonth,newday;
+//	printf("donner le id de la tache a filtrer \n");
+//	scanf("%d",&t.id);
+//	if(exist(t.id)==1)
+		 printf("donner le jour \n");
+    scanf("%d", &newday);
+    printf("donner le mois \n");
+    scanf("%d", &newmonth);
+    printf("donner l'annee \n");
+    scanf("%d", &newyear);
+
+    for (int j = 0; j < i; j++) {
+        if (tab[j].datedech.day == newday && tab[j].datedech.month == newmonth && tab[j].datedech.year == newyear) {
+            printf("Informations dans la tache %d :\n", j + 1);
+            printf("ID : %d\n", tab[j].id);
+            printf("Description : %s\n", tab[j].description);
+            printf("Priorite : %s\n", tab[j].priorite);
+            printf("Datedechance : %d/%d/%d\n", tab[j].datedech.day, tab[j].datedech.month, tab[j].datedech.year);
+			
+		}
+	
+}
+}
 
 int main()
 
@@ -151,10 +234,10 @@ int main()
     	printf("choisissez vous votre chois \n");
     	printf("taper 1 pour ajouter une tache \n");
     	printf("tapper 2 pour Afficher la Liste des Taches \n");
-    	printf("tapper 3 pour Modifier une T?che  \n");
-    	printf("tapper 4 pour Supprimer  une T?che  \n");
-    	printf("tapper 5 pour Ordonner les T?ches \n");
-    	printf("tapper 6 pour Filtrer les T?ches \n ");
+    	printf("tapper 3 pour Modifier une Tache  \n");
+    	printf("tapper 4 pour Supprimer  une Tache  \n");
+    	printf("tapper 5 pour Ordonner les Taches \n");
+    	printf("tapper 6 pour Filtrer les Taches \n ");
     	printf("tapper 7 pour quiter \n");
     	scanf("%d",&choix);
     	
@@ -164,10 +247,10 @@ int main()
     		     	ajouter();
     			break;
     		case 2:
-    					afficher(tab,i);
+    					afficher();
     			break;
     		case 3:
-    		//	modifier();
+    			modifier();
 		     	break;
 			case 4:
 				supprimer();
@@ -176,6 +259,7 @@ int main()
 		     	ordoner();
 			    break;
 			case 6:
+				filtrerpardate(tab);
 			    break;
 			case 7:
 			      printf("au revoire ");
